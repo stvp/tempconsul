@@ -5,7 +5,7 @@ processes. This is useful for things like integration tests (and not much else).
 
 See `tempconsul_test.go` for an usage example.
 
-[API documentation](http://godoc.org/github.com/stvp/tempredis)
+[API documentation](http://godoc.org/github.com/stvp/tempconsul)
 
 ## Should I use this?
 
