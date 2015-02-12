@@ -1,7 +1,7 @@
 package tempconsul
 
 import (
-	"github.com/armon/consul-kv"
+	"github.com/hashicorp/consul/api"
 	"testing"
 )
 
@@ -13,16 +13,19 @@ func TestServer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	client, _ := consulkv.NewClient(consulkv.DefaultConfig())
-	err = client.Put("test", []byte("cool"), 0)
+	client, _ := api.NewClient(api.DefaultConfig())
+	kv := client.KV()
+
+	putpair := &api.KVPair{Key: "test", Value: []byte("cool")}
+	_, err = kv.Put(putpair, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, pair, err := client.Get("test")
+	getpair, _, err := kv.Get("test", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if string(pair.Value) != "cool" {
-		t.Errorf("got: %#v", string(pair.Value))
+	if string(getpair.Value) != "cool" {
+		t.Errorf("got: %#v", string(getpair.Value))
 	}
 }
