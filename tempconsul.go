@@ -32,7 +32,7 @@ func (s *Server) Start() error {
 	}
 
 	// Build Cmd
-	s.cmd = exec.Command("consul", "agent", "-server", "-bootstrap", "-data-dir", dataDir)
+	s.cmd = exec.Command("consul", "agent", "-server", "-bootstrap-expect", "1", "-data-dir", dataDir)
 	serverStdout, err := s.cmd.StdoutPipe()
 	if err != nil {
 		s.cmd = nil
