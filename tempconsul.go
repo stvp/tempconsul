@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os/exec"
 	"strings"
 	"syscall"
@@ -25,14 +24,8 @@ func (s *Server) Start() error {
 		return fmt.Errorf("consul has already been started")
 	}
 
-	// Create temporary data-dir
-	dataDir, err := ioutil.TempDir("", fmt.Sprintf("tempconsul%d", time.Now().UnixNano()))
-	if err != nil {
-		return err
-	}
-
 	// Build Cmd
-	s.cmd = exec.Command("consul", "agent", "-server", "-bootstrap-expect", "1", "-data-dir", dataDir)
+	s.cmd = exec.Command("consul", "agent", "-dev", "-bind", "127.0.0.1")
 	serverStdout, err := s.cmd.StdoutPipe()
 	if err != nil {
 		s.cmd = nil
