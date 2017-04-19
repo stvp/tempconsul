@@ -12,7 +12,7 @@ import (
 
 var (
 	StartupSuccess = "cluster leadership acquired"
-	StartupTimeout = 5 * time.Second
+	StartupTimeout = 10 * time.Second
 )
 
 type Server struct {
